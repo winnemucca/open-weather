@@ -9,53 +9,101 @@
   <div class="search-box">
 
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon search-icon" aria-label="Search icon-button with search icon">
+    <button 
+      (click)="showSearch()"
+      style="color: white;"
+      mat-icon-button 
+      class="example-icon search-icon" 
+      aria-label="Search icon-button with search icon">
       <mat-icon>search</mat-icon>
     </button>
+
+    @if(showCitySearch) {
+      <mat-form-field class="example-full-width mt-2">
+        <mat-label>City Search</mat-label>
+        <input matInput placeholder="City Search" value="city">
+      </mat-form-field>
+    
+    }
   </div>
   
 </mat-toolbar>
 
-<mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
-  <mat-button-toggle value="bold">Bold</mat-button-toggle>
-  <mat-button-toggle value="italic">Italic</mat-button-toggle>
-  <mat-button-toggle value="underline">Underline</mat-button-toggle>
+<mat-button-toggle-group 
+  style="flex-wrap: wrap;"
+  appearance="legacy" 
+  name="fontStyle" 
+  aria-label="Font Style"
+  class="mb-8 background-white"
+  >
+  <mat-button-toggle 
+    (click)="findCityWeather('Rio de Janeiro');findTwelveHours(22.9068, 43.1729)"
+    value="RIO DE JANIERO">Rio DE JANIERO</mat-button-toggle>
+  <mat-button-toggle 
+    (click)="findCityWeather('BEIJING'); findTwelveHours(39.9042, 116.4074)"
+    value="BEIJING">BEIJING</mat-button-toggle>
+  <mat-button-toggle 
+    (click)="findCityWeather('LOS ANGELES'); findTwelveHours(34.0549, 118.2426)"
+    value="LOS ANGELES">LOS ANGELES</mat-button-toggle>
 </mat-button-toggle-group>
 
-<section>
-  <mat-card appearance="outlined">
+<section class="card-container mb-4">
+  <mat-card appearance="outlined" class="card-width">
     <mat-card-header>
       <mat-card-title class="text-3xl font-bold "> Next Hours</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      @for(day of nextHoursWeather; track day.temperature) {
-        <div class="container">
-          <div class="temperature">{{day?.temperature}}</div>
-          <div>{{day?.precipitation}}</div>
-          <div>{{day?.dayIcon}}</div>
-          <div>{{day?.timeOfDay}}</div>
-        </div>
+    <mat-card-content class="container container-hours">
+      @for(day of nextTwelveHours; track day.time) {
+        <section class="weather-hour">
+          <div class="temperature pb-2 text-center">{{day.temp| degree}}</div>
+          <section class="hour-desc">
+            <div class="pb-1 sky-blue text-center">
+              {{day?.prec || 0 | percent}}
+            </div>
+            <div class="pb-1 day-icon text-center">
+              <img 
+                class="text-center"
+                [class.scatClouds]="day.icon.includes('03n') || day.icon.includes('02d')"
+                [src]="'https://openweathermap.org/img/wn/' + day.icon + '@2x.png'">
+            </div>
+          </section>
+          <div class="pb-1 text-center">{{day.time | timeStamp }}</div>
+        </section>
       }
       </mat-card-content>
     </mat-card>
 </section>
 
-<section>
-  <mat-card appearance="outlined">
+<section class="card-container">
+  <mat-card appearance="outlined" class="card-width">
     <mat-card-header>
       <mat-card-title> Next 5 days</mat-card-title>
     </mat-card-header>
-
     <mat-card-content>
-      <p>
-        
-      </mat-card-content>
-    
-    </mat-card>
+      @if (dailyForecasts.length > 0) {
 
+          @for(day of dailyForecasts; track $index; let i = $index) {
+          
+            <section class="container-days mb-2">
+              <div class="day-icon">
+                <img 
+                  [class.scatClouds]=
+                    "day.icon.includes('03n') || day.icon.includes('02d')"
+                  [src]="'https://openweathermap.org/img/wn/' + day.icon + '@2x.png'">
+              </div>
+              <section class="day-descr">
+                <div class="date">{{day.formattedDate}}</div>
+                <div class="desc">{{day.description}}</div>
+              </section>
+              <div class="temp">
+                <span>{{day.maxTemp | degree }}</span>
+                <span>{{day.minTemp | degree}}</span>
+              </div>
+            </section>   
+        }
+      }
+    </mat-card-content>
+  </mat-card>
 </section>
-
-
-<!-- button section -->
 
 <router-outlet />
