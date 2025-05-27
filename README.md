@@ -23,6 +23,7 @@ I was unable to complete api requests for daily weather info using 2.5
  - write unit tests
  - initiate signal store
  - create global search.  i have an express backend locally running but I was unable to refactor rest of code in timely manner
+ - Add caching
 
 
 ## Photos
