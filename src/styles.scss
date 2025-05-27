@@ -1,0 +1,102 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use './helper.scss';
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  background-color: skyblue;
+  font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-button-toggle-label-content {
+  line-height: 64px !important;
+  font-size: 1.25rem;
+}
+
+.mat-button-toggle-group {
+  width: 100%;
+}
+
+.mat-button-toggle {
+  flex-basis: 33%;
+  font-weight: 800;
+}
+
+
+.mat-mdc-card-header .mat-mdc-card-header-text .mat-mdc-card-title {
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.mat-mdc-card-content {
+  display: grid !important;
+}
+
+.card-container {
+  justify-content: center;
+  display: grid;
+  margin: 1rem 20px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1600px));
+}
+
+.container {
+  display: grid;
+}
+
+.weather-hour {
+  display: grid;
+}
+
+.container-hours {
+  grid-template-columns: repeat(12, 4rem);
+  display: grid;
+  overflow: scroll;
+}
+
+.container-days {
+  display: grid;
+  grid-template-columns: 1fr 5fr 2fr;
+  border-top: 1px solid gainsboro;
+  padding: 1rem 0;
+}
+
+.temp {
+  display: flex;
+  justify-content: space-around;
+}
+
+.desc {
+  font-size: .8rem;
+  color: gray;
+}
+
+.date {
+  font-weight: 500;
+}
+
+.day-icon {
+  img {
+    height: 2rem;
+  }
+}
+
+.scatClouds {
+  background-color: skyblue;
+  border-radius: 50%;
+}
+
+.hour-desc {
+  border-right: 1px solid gainsboro;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+:root {
+  @include mat.toolbar-overrides((
+      container-background-color: #3c3cef,
+      container-text-color: white,
+    ));
+}
